@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using System.Threading.Tasks;
 using DevMaid.Commands;
 using Microsoft.Extensions.CommandLineUtils;
@@ -185,6 +187,40 @@ namespace DevMaid
 
             try
             {
+                var allfiles = Directory.GetFiles(@"C:\Users\liphv\Documents\App\NeoveroWeb\Web", "*.*", SearchOption.AllDirectories);
+
+                foreach (var file in allfiles)
+                {
+                    var info = new FileInfo(file);
+
+                    // Do something with the Folder or just add them to a list via nameoflist.add();
+                }
+
+                var GetAllFileText = string.Empty;
+                var utf8 = Encoding.UTF8;
+
+                foreach (var inputFilePath in allfiles)
+                {
+                    var currentEncoding = Geral.GetCurrentFileEncoding(inputFilePath);
+                    if (currentEncoding.EncodingName.ToLower() == "utf-8" || currentEncoding.EncodingName.ToLower() == "utf8")
+                    {
+                        continue;
+                    }
+                    GetAllFileText = File.ReadAllText(inputFilePath, currentEncoding);
+                    
+
+                    var currentEncodingBytes = utf8.GetBytes(GetAllFileText);
+                    var utfBytes = Encoding.Convert(currentEncoding, utf8, currentEncodingBytes);
+
+                    string utf8Message = utf8.GetString(utfBytes);
+
+                    // Console.WriteLine($"The file {0} has been processed. {currentEncoding.EncodingName} - {utf8.EncodingName}", inputFilePath);
+                    File.WriteAllText(inputFilePath, utf8Message, Encoding.UTF8);
+                }
+
+
+                
+
                 // This begins the actual execution of the application
                 app.Execute(args);
             }
