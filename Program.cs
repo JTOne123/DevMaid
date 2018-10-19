@@ -187,7 +187,7 @@ namespace DevMaid
 
             try
             {
-                var allfiles = Directory.GetFiles(@"C:\Users\liphv\Documents\App\NeoveroWeb3\", "*.*", SearchOption.AllDirectories);
+                var allfiles = Directory.GetFiles(@"C:\Users\liphv\Documents\App\NeoveroWeb\", "*.*", SearchOption.AllDirectories);
 
                 var extensions = new List<string> {
                 ".gitignore",
@@ -233,58 +233,57 @@ namespace DevMaid
                 ".pubxml",
                 ".less",
                 ".mjs",
-                ".vue"
+                ".vue",
+                ".editorconfig"
                 };
 
                 var arquivosSelecionas = new List<string>();
 
-                var exts = new HashSet<string>();
+                // var exts = new HashSet<string>();
 
                 foreach (var file in allfiles)
                 {
                     var info = new FileInfo(file);
     
-
                     if (extensions.Contains(info.Extension))
                     {
                         arquivosSelecionas.Add(file);
                     }
                     // Do something with the Folder or just add them to a list via nameoflist.add();
-                    exts.Add(info.Extension);
+                    // exts.Add(info.Extension);
                 }
 
-                foreach (var ext in exts)
-                {
-                    Console.WriteLine(ext);
-                }
-
-                var GetAllFileText = string.Empty;
-                var utf8 = Encoding.UTF8;
-
-                // foreach (var inputFilePath in arquivosSelecionas)
+                // foreach (var ext in exts)
                 // {
-                //     // Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-                //     var currentEncoding = Geral.GetCurrentFileEncoding(inputFilePath);
-                //     if (currentEncoding.EncodingName.ToLower() == "unicode (utf-8)")
-                //     {
-                //         continue;
-                //     }
-                //     else
-                //     {
-                //         currentEncoding = CodePagesEncodingProvider.Instance.GetEncoding(1252);
-                //     }
-
-                //     var bytesDoArquivo = File.ReadAllBytes(inputFilePath);
-
-
-                //     // var currentEncodingBytes = utf8.GetBytes(GetAllFileText);
-                //     var utfBytes = Encoding.Convert(currentEncoding,utf8, bytesDoArquivo);
-
-                //     // string utf8Message = utf8.GetString(utfBytes);
-
-                //     // Console.WriteLine($"The file {0} has been processed. {currentEncoding.EncodingName} - {utf8.EncodingName}", inputFilePath);
-                //     File.WriteAllText(inputFilePath, utf8.GetString(utfBytes), utf8);
+                //     Console.WriteLine(ext);
                 // }
+
+                var utf8 = Encoding.UTF8;
+                foreach (var inputFilePath in arquivosSelecionas)
+                {
+                    // Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+                    var currentEncoding = Geral.GetCurrentFileEncoding(inputFilePath);
+                    if (currentEncoding.EncodingName.ToLower() == "unicode (utf-8)")
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        Console.WriteLine(currentEncoding.EncodingName);
+                        // currentEncoding = CodePagesEncodingProvider.Instance.GetEncoding(1252);
+                    }
+
+                    // var bytesDoArquivo = File.ReadAllBytes(inputFilePath);
+
+
+                    // // var currentEncodingBytes = utf8.GetBytes(GetAllFileText);
+                    // var utfBytes = Encoding.Convert(currentEncoding,utf8, bytesDoArquivo);
+
+                    // // string utf8Message = utf8.GetString(utfBytes);
+
+                    // // Console.WriteLine($"The file {0} has been processed. {currentEncoding.EncodingName} - {utf8.EncodingName}", inputFilePath);
+                    // File.WriteAllText(inputFilePath, utf8.GetString(utfBytes), utf8);
+                }
 
 
 
