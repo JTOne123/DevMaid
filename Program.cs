@@ -187,7 +187,7 @@ namespace DevMaid
 
             try
             {
-                var allfiles = Directory.GetFiles(@"C:\Users\liphv\Documents\App\NeoveroWeb\Web", "*.*", SearchOption.AllDirectories);
+                var allfiles = Directory.GetFiles(@"C:\Users\liphv\Documents\App\NeoveroWeb\Web", "*.aspx", SearchOption.AllDirectories);
 
                 foreach (var file in allfiles)
                 {
@@ -201,25 +201,32 @@ namespace DevMaid
 
                 foreach (var inputFilePath in allfiles)
                 {
+                    // Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
                     var currentEncoding = Geral.GetCurrentFileEncoding(inputFilePath);
-                    if (currentEncoding.EncodingName.ToLower() == "utf-8" || currentEncoding.EncodingName.ToLower() == "utf8")
+                    Console.WriteLine(currentEncoding.EncodingName);
+                    if (currentEncoding.EncodingName.ToLower() == "unicode (utf-8)")
                     {
                         continue;
                     }
-                    GetAllFileText = File.ReadAllText(inputFilePath, currentEncoding);
+                    else
+                    {
+                        currentEncoding = CodePagesEncodingProvider.Instance.GetEncoding(1252);
+                    }
                     
+                    var bytesDoArquivo = File.ReadAllBytes(inputFilePath);
 
-                    var currentEncodingBytes = utf8.GetBytes(GetAllFileText);
-                    var utfBytes = Encoding.Convert(currentEncoding, utf8, currentEncodingBytes);
 
-                    string utf8Message = utf8.GetString(utfBytes);
+                    // var currentEncodingBytes = utf8.GetBytes(GetAllFileText);
+                    var utfBytes = Encoding.Convert(currentEncoding,utf8, bytesDoArquivo);
+
+                    // string utf8Message = utf8.GetString(utfBytes);
 
                     // Console.WriteLine($"The file {0} has been processed. {currentEncoding.EncodingName} - {utf8.EncodingName}", inputFilePath);
-                    File.WriteAllText(inputFilePath, utf8Message, Encoding.UTF8);
+                    File.WriteAllText(inputFilePath, utf8.GetString(utfBytes), utf8);
                 }
 
 
-                
+
 
                 // This begins the actual execution of the application
                 app.Execute(args);
