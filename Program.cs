@@ -187,49 +187,110 @@ namespace DevMaid
 
             try
             {
-                var allfiles = Directory.GetFiles(@"C:\Users\liphv\Documents\App\NeoveroWeb\Web", "*.aspx", SearchOption.AllDirectories);
+                var allfiles = Directory.GetFiles(@"C:\Users\liphv\Documents\App\NeoveroWeb3\", "*.*", SearchOption.AllDirectories);
+
+                var extensions = new List<string> {
+                ".gitignore",
+                ".bat",
+                ".sln",
+                ".config",
+                ".md",
+                ".editorconfig",
+                ".json",
+                ".txt",
+                ".cs",
+                ".csproj",
+                ".resx",
+                ".nuspec",
+                ".js",
+                ".aspx",
+                ".html",
+                ".asmx",
+                ".asax",
+                ".licx",
+                ".htm",
+                ".yaml",
+                ".targets",
+                ".ts",
+                ".scss",
+                ".settings",
+                ".css",
+                ".map",
+                ".ascx",
+                ".svg",
+                ".master",
+                ".cshtml",
+                ".xsd",
+                ".gitkeep",
+                ".xml",
+                ".sql",
+                ".svcinfo",
+                ".datasource",
+                ".disco",
+                ".wsdl",
+                ".svcmap",
+                ".webmanifest",
+                ".pubxml",
+                ".less",
+                ".mjs",
+                ".vue"
+                };
+
+                var arquivosSelecionas = new List<string>();
+
+                var exts = new HashSet<string>();
 
                 foreach (var file in allfiles)
                 {
                     var info = new FileInfo(file);
+    
 
+                    if (extensions.Contains(info.Extension))
+                    {
+                        arquivosSelecionas.Add(file);
+                    }
                     // Do something with the Folder or just add them to a list via nameoflist.add();
+                    exts.Add(info.Extension);
+                }
+
+                foreach (var ext in exts)
+                {
+                    Console.WriteLine(ext);
                 }
 
                 var GetAllFileText = string.Empty;
                 var utf8 = Encoding.UTF8;
 
-                foreach (var inputFilePath in allfiles)
-                {
-                    // Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-                    var currentEncoding = Geral.GetCurrentFileEncoding(inputFilePath);
-                    Console.WriteLine(currentEncoding.EncodingName);
-                    if (currentEncoding.EncodingName.ToLower() == "unicode (utf-8)")
-                    {
-                        continue;
-                    }
-                    else
-                    {
-                        currentEncoding = CodePagesEncodingProvider.Instance.GetEncoding(1252);
-                    }
-                    
-                    var bytesDoArquivo = File.ReadAllBytes(inputFilePath);
+                // foreach (var inputFilePath in arquivosSelecionas)
+                // {
+                //     // Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+                //     var currentEncoding = Geral.GetCurrentFileEncoding(inputFilePath);
+                //     if (currentEncoding.EncodingName.ToLower() == "unicode (utf-8)")
+                //     {
+                //         continue;
+                //     }
+                //     else
+                //     {
+                //         currentEncoding = CodePagesEncodingProvider.Instance.GetEncoding(1252);
+                //     }
+
+                //     var bytesDoArquivo = File.ReadAllBytes(inputFilePath);
 
 
-                    // var currentEncodingBytes = utf8.GetBytes(GetAllFileText);
-                    var utfBytes = Encoding.Convert(currentEncoding,utf8, bytesDoArquivo);
+                //     // var currentEncodingBytes = utf8.GetBytes(GetAllFileText);
+                //     var utfBytes = Encoding.Convert(currentEncoding,utf8, bytesDoArquivo);
 
-                    // string utf8Message = utf8.GetString(utfBytes);
+                //     // string utf8Message = utf8.GetString(utfBytes);
 
-                    // Console.WriteLine($"The file {0} has been processed. {currentEncoding.EncodingName} - {utf8.EncodingName}", inputFilePath);
-                    File.WriteAllText(inputFilePath, utf8.GetString(utfBytes), utf8);
-                }
+                //     // Console.WriteLine($"The file {0} has been processed. {currentEncoding.EncodingName} - {utf8.EncodingName}", inputFilePath);
+                //     File.WriteAllText(inputFilePath, utf8.GetString(utfBytes), utf8);
+                // }
 
 
 
 
                 // This begins the actual execution of the application
-                app.Execute(args);
+                // app.Execute(args);
             }
             catch (CommandParsingException ex)
             {
