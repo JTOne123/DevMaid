@@ -187,7 +187,7 @@ namespace DevMaid
 
             try
             {
-                var allfiles = Directory.GetFiles(@"C:\Users\liphv\Documents\App\NeoveroWeb\", "*.*", SearchOption.AllDirectories);
+                var allfiles = Directory.GetFiles(@"Path", "*.*", SearchOption.AllDirectories);
 
                 var extensions = new List<string> {
                 ".gitignore",
@@ -269,20 +269,18 @@ namespace DevMaid
                     }
                     else
                     {
-                        Console.WriteLine(currentEncoding.EncodingName);
-                        // currentEncoding = CodePagesEncodingProvider.Instance.GetEncoding(1252);
+                        // Console.WriteLine(currentEncoding.EncodingName);
+                        currentEncoding = CodePagesEncodingProvider.Instance.GetEncoding(1252);
                     }
 
-                    // var bytesDoArquivo = File.ReadAllBytes(inputFilePath);
+                    var bytesDoArquivo = File.ReadAllBytes(inputFilePath);
 
 
-                    // // var currentEncodingBytes = utf8.GetBytes(GetAllFileText);
-                    // var utfBytes = Encoding.Convert(currentEncoding,utf8, bytesDoArquivo);
+                    // var currentEncodingBytes = utf8.GetBytes(GetAllFileText);
+                    var utfBytes = Encoding.Convert(currentEncoding,utf8, bytesDoArquivo);
 
-                    // // string utf8Message = utf8.GetString(utfBytes);
-
-                    // // Console.WriteLine($"The file {0} has been processed. {currentEncoding.EncodingName} - {utf8.EncodingName}", inputFilePath);
-                    // File.WriteAllText(inputFilePath, utf8.GetString(utfBytes), utf8);
+                    // Console.WriteLine($"The file {0} has been processed. {currentEncoding.EncodingName} - {utf8.EncodingName}", inputFilePath);
+                    File.WriteAllText(inputFilePath, utf8.GetString(utfBytes), utf8);
                 }
 
 
